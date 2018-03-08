@@ -8,13 +8,14 @@ export default function Form(props) {
   const computerGuess = Math.floor(Math.random() * 100);
   console.log(computerGuess);
 
-  const giveClue = (user_guess, computerGuess) => {
-    // console.log(user_guess);
-    if (userGuess === computerGuess) {
-      alert('You are correct')
+  const giveClue = (userGuess, computerGuess) => {
+    let result = ((computerGuess - userGuess) / computerGuess) * 100;
+    console.log('result is', computerGuess);
+    if (result <= 10) {
+      alert('You are hot');
+    } else {
+      alert('You are cold');
     }
-    // +=10 from computerGuess, alert hot
-    // else cold
   }
 
   const handleSubmit = (event) => {
