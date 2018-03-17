@@ -1,6 +1,7 @@
 import React from 'react'
 
 import './form.css';
+import Output from './output';
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -8,8 +9,9 @@ export default class Form extends React.Component {
 
     this.state = {
       userGuess: 0,
-      computerGuess: Math.floor(Math.random() * 100),
-      result: 0
+      // computerGuess: Math.floor(Math.random() * 100),
+      computerGuess: 45,
+      result: 'cold'
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,18 +37,18 @@ export default class Form extends React.Component {
   }
 
   handleSubmit(event) {
-    // alert('Guess was submitted: ' + this.state.userGuess);
+    alert('Your guess is: ' + this.state.userGuess);
     event.preventDefault();
   }
 
-  giveClue(result) {
+  giveClue(guess) {
     console.log('Form was submitted');
-    let result = ((this.state.computerGuess - this.state.userGuess) / this.state.computerGuess) * 100;
-    if (result <= 10) {
-      alert('You are hot')
-    } else {
-      alert('You are cold')
-    }
+    // let guess = ((this.state.computerGuess - this.state.userGuess) / this.state.computerGuess) * 100;
+    // if (guess <= 10) {
+    //   alert('You are hot')
+    // } else {
+    //   alert('You are cold')
+    // }
   }
 
   render() {
@@ -61,38 +63,18 @@ export default class Form extends React.Component {
                min={0}
                max={100}
                value={this.state.userGuess}
+               // onChange={this.handleChange}
                onChange={this.handleChange}
              />
            </div>
            <div className="button">
-             <button type="submit" onClick={this.giveClue(this.state.result)}>Submit</button>
+             <button type="submit" onClick={this.giveClue(this.state.userGuess)}>Submit</button>
            </div>
+
+           <Output id="user-guess" label="Submitted Guess: " value={this.state.result}
+/>
        </form>
      );
   }
 
 }
-
-// default function Form(props) {
-//   let userGuess, message;
-//
-//   const computerGuess = Math.floor(Math.random() * 100);
-//   console.log(computerGuess);
-//
-//   const giveClue = (userGuess, computerGuess) => {
-//     let result = ((computerGuess - userGuess) / computerGuess) * 100;
-//     console.log('result is', computerGuess);
-//     if (result <= 10) {
-//       alert('You are hot');
-//     } else {
-//       alert('You are cold');
-//     }
-//   }
-//
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     console.log("user submission", userGuess.value)
-//   }
-//
-//
-// }
