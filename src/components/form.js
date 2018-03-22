@@ -9,13 +9,13 @@ export default class Form extends React.Component {
 
     this.state = {
       userGuess: 0,
-      // computerGuess: Math.floor(Math.random() * 100),
-      computerGuess: 45,
-      result: 'cold'
+      computerGuess: Math.floor(Math.random() * 100),
+      result: null
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.giveClue = this.giveClue.bind(this);
   }
 
   setUserGuess(userGuess) {
@@ -24,16 +24,8 @@ export default class Form extends React.Component {
     })
   }
 
-  setComputerGuess(computerGuess) {
-    this.setState({
-      computerGuess
-    })
-  }
-
   handleChange(event) {
-    // event.preventDefault();
     this.setState({userGuess: event.target.value});
-    console.log('userguess is' + this.state.userGuess);
   }
 
   handleSubmit(event) {
@@ -41,14 +33,22 @@ export default class Form extends React.Component {
     event.preventDefault();
   }
 
-  giveClue(guess) {
-    console.log('Form was submitted');
-    // let guess = ((this.state.computerGuess - this.state.userGuess) / this.state.computerGuess) * 100;
-    // if (guess <= 10) {
-    //   alert('You are hot')
-    // } else {
-    //   alert('You are cold')
-    // }
+  giveClue() {
+    let guess = parseInt(this.state.userGuess)
+    const difference = Math.abs(guess - this.state.computerGuess)
+
+    let result;
+    if (difference >= 10) {
+      result = 'Cold!'
+    } else if (difference < 10) {
+      result = 'Hot!'
+    } else {
+      result = 'Correct!'
+    }
+
+    this.setState({
+      result
+    })
   }
 
   render() {
@@ -63,16 +63,13 @@ export default class Form extends React.Component {
                min={0}
                max={100}
                value={this.state.userGuess}
-               // onChange={this.handleChange}
                onChange={this.handleChange}
              />
            </div>
            <div className="button">
-             <button type="submit" onClick={this.giveClue(this.state.userGuess)}>Submit</button>
+             <button type="submit" onClick={this.giveClue}>Submit</button>
            </div>
-
-           <Output id="user-guess" label="Submitted Guess: " value={this.state.result}
-/>
+           { this.state.result && <Output id="user-guess" label="Submitted Guess: " value={this.state.result} /> }
        </form>
      );
   }
